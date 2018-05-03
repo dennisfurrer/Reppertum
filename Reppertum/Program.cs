@@ -1,9 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 
-namespace Reppertum
-{
-    class Program
-    {
+namespace Reppertum {
+    class Program {
         private static Blockchain _chain;
         private static string _currHash = string.Empty;
 
@@ -22,14 +21,14 @@ namespace Reppertum
             }
             else {
                 Console.WriteLine("Exiting");
-                return;
             }
         }
 
         private static void NewChain() {
             Console.Clear();
 
-            _chain = new Blockchain("0", "Genesis Block", DateTime.UtcNow.Ticks);
+            List<Transaction> genTx = new List<Transaction>{new Transaction(0, "0", "Network", "Network", "Genesis Block", DateTime.UtcNow.Ticks)};
+            _chain = new Blockchain("0", genTx, DateTime.UtcNow.Ticks);
             _currHash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
 
@@ -39,10 +38,9 @@ namespace Reppertum
                 Console.WriteLine("(1) Add new block\n(2) View blockchain\n(3) View block\n(4) Quit\n");
                 string execType = Console.ReadLine();
 
-                switch (execType)
-                {
+                switch (execType) {
                     case "1":
-                        Add();
+                        AddBlock();
                         break;
                     case "2":
                         ViewChain();
@@ -61,39 +59,66 @@ namespace Reppertum
             }
         }
 
-        private static void ViewBlock()
-        {
+        private static void AddBlock() {
+            string execType = string.Empty;
+            UInt16 txCount = 0;
+            List<Transaction> transactions = new List<Transaction>();
+            
+            do {
+                Console.Clear();
+                Console.WriteLine("(1) Add transaction\n(2) Mine block\n");
+                execType = Console.ReadLine();
+                if (execType == "1" || execType == "1") {
+                    transactions.Add(AddTransaction(txCount));
+                }
+                else {
+                    break;
+                }
+                txCount++;
+            } while (execType == "1");
+
+            Block block = _chain.AddBlock(_currHash, transactions, DateTime.UtcNow.Ticks);
+
+            Console.WriteLine($"Added Block {block.Index} with Hash: {block.Hash})\n");
+
+            _currHash = block.Hash;
+        }
+
+        private static Transaction AddTransaction(UInt16 index) {
             Console.Clear();
-            Console.WriteLine("Block Index: ");
-            UInt16 index = UInt16.Parse(Console.ReadLine());
-            Int32 chainSize = _chain.GetNumberOfBlocks() - 1;
-            if (index <= chainSize) {
-                Block block = _chain.GetBlock(index);
-                Console.WriteLine($"Block { block.Index }\nHash: { block.Hash }\nPrevious Hash: { block.PreviousHash }\nData: { block.Data }\nTimestamp: { block.Timestamp }\n");             
-            }
-            else {
-                Console.WriteLine($"Block { index } does not exist\n");
-            }
+            Console.Write("Transaction Data: ");
+            string data = Console.ReadLine();
+            return _chain.AddTransaction(index, "Network", "Network", data);
         }
         
         private static void ViewChain() {
             Console.Clear();
             
             foreach (Block currBlock in _chain.Chain) {
-                Console.WriteLine($"Block { currBlock.Index }\nHash: { currBlock.Hash }\nPrevious Hash: { currBlock.PreviousHash }\nData: { currBlock.Data }\nTimestamp: { currBlock.Timestamp }\n");
+                Console.WriteLine($"\nBlock {currBlock.Index}\n---------------\nHash: {currBlock.Hash}\nPrevious Hash: {currBlock.PreviousHash}\nTimestamp: {currBlock.Timestamp}");
+                foreach (Transaction t in currBlock.Data) {
+                    Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {currBlock.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
+                }
             }
         }
-
-        private static void Add() {
+        
+        private static void ViewBlock()
+        {
             Console.Clear();
-            Console.Write("Data: ");
-            string data = Console.ReadLine();
-            
-            Block c = _chain.AddBlock(_currHash, data, DateTime.UtcNow.Ticks);
-
-            Console.WriteLine($"Added Block { c.Index } with Hash: { c.Hash })\n");
-
-            _currHash = c.Hash;
+            Console.WriteLine("Enter Block Index: ");
+            UInt16 index = UInt16.Parse(Console.ReadLine());
+            Int32 chainSize = _chain.GetNumberOfBlocks() - 1;
+            Int32 txIndex = 0;
+            if (index <= chainSize) {
+                Block block = _chain.GetBlock(index);
+                Console.WriteLine($"\nBlock {block.Index}\n---------------\nHash: {block.Hash}\nPrevious Hash: {block.PreviousHash}\nTimestamp: {block.Timestamp}");
+                foreach (Transaction t in block.Data) {
+                    Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {block.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
+                }
+            }
+            else {
+                Console.WriteLine($"Block { index } does not exist\n");
+            }
         }
     }
 }
