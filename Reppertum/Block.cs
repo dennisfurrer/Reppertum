@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reppertum {
-    public class Block {
+namespace Reppertum 
+{
+    public class Block 
+    {
         public readonly UInt16 Index;
         public readonly string PreviousHash, Hash;
         public readonly List<Transaction> Data;
