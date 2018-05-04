@@ -3,14 +3,17 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Reppertum {
-    public class Blockchain {
+namespace Reppertum 
+{
+    public class Blockchain 
+    {
         public readonly List<Block> Chain = new List<Block>();
         public readonly string FirstHash;
         
         private UInt16 _current = 0;
 
-        public Blockchain(string prevHash, List<Transaction> data, Int64 timestamp) {
+        public Blockchain(string prevHash, List<Transaction> data, Int64 timestamp) 
+        {
             string hash = GetHash(_current, prevHash, data, timestamp);
             FirstHash = hash;
             Block b = new Block(_current, prevHash, hash, data, timestamp);
@@ -18,39 +21,47 @@ namespace Reppertum {
             _current++;
         }
 
-        public Block AddBlock(string prevHash, List<Transaction> data, Int64 timestamp) {
+        public Block AddBlock(string prevHash, List<Transaction> data, Int64 timestamp) 
+        {
             Block prevB = Chain[_current-1];
             string hash = GetHash(_current, prevHash, data, timestamp);
             Block newB = new Block(_current, prevHash, hash, data, timestamp);
 
-            if (ProofOfWork((Block)prevB, newB)) {
+            if (ProofOfWork((Block)prevB, newB)) 
+            {
                 Chain.Add(newB);
                 _current++;
             }
-            else if (prevB.PreviousHash != prevHash && prevB.Index != 0) {
+            else if (prevB.PreviousHash != prevHash && prevB.Index != 0) 
+            {
                 throw new Exception("Hashes do not match");
             }
-            else {
+            else 
+            {
                 throw new Exception("Chain not valid");
             }
 
             return newB;
         }
         
-        public Transaction AddTransaction(UInt16 index, string from, string to, string data) {
+        public Transaction AddTransaction(UInt16 index, string from, string to, string data) 
+        {
             string hashable = index + from + to + data;
             return new Transaction(index, Cryptography.Sha256(hashable), from, to, data, DateTime.UtcNow.Ticks);
         }
 
-        public Block GetBlock(UInt16 index) {
+        public Block GetBlock(UInt16 index) 
+        {
             return Chain[index];
         }
 
-        public string GetHash(UInt16 i, string prevHash, List<Transaction> data, Int64 timestamp) {
+        public string GetHash(UInt16 i, string prevHash, List<Transaction> data, Int64 timestamp) 
+        {
             return Cryptography.Sha256(i.ToString() + prevHash + data + timestamp);
         }
 
-        public Int32 GetNumberOfBlocks() {
+        public Int32 GetNumberOfBlocks() 
+        {
             return Chain.Count;
         }
 
@@ -62,12 +73,15 @@ namespace Reppertum {
             UInt32 nonce = 0;
             string header = newB.Index + newB.PreviousHash;
             string hash;
-            do {
+            
+            do 
+            {
                 hash = Cryptography.Sha256(header + nonce);
                 nonce++;
-            } while (hash.Substring(0, difficulty - 1) != "0000");
+            } 
+            while (hash.Substring(0, difficulty - 1) != "0000");
             
-            valid = (hash.Substring(0, difficulty-1) == "0000") ? true : false;
+            valid = (hash.Substring(0, difficulty-1) == "0000");
             
             Console.WriteLine("Successfully computed!");
             

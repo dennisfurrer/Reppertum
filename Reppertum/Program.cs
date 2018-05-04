@@ -1,30 +1,37 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Reppertum {
-    class Program {
+namespace Reppertum 
+{
+    class Program 
+    {
         private static Blockchain _chain;
         private static string _currHash = string.Empty;
 
-        private static void Main(string[] args) {
+        private static void Main(string[] args) 
+        {
             Console.WriteLine("Welcome! To quit -> Control + c \n");
             Setup();
             Console.ReadKey();
         }
 
-        private static void Setup() {
+        private static void Setup() 
+        {
             Console.Write("(1) New blockchain: ");
             string execType = Console.ReadLine();
 
-            if (execType == "1") {
+            if (execType == "1") 
+            {
                 NewChain();
             }
-            else {
+            else 
+            {
                 Console.WriteLine("Exiting");
             }
         }
 
-        private static void NewChain() {
+        private static void NewChain() 
+        {
             Console.Clear();
 
             List<Transaction> genTx = new List<Transaction>{new Transaction(0, "0", "Network", "Network", "Genesis Block", DateTime.UtcNow.Ticks)};
@@ -34,11 +41,13 @@ namespace Reppertum {
 
             bool ok = true;
 
-            while (ok) {
+            while (ok) 
+            {
                 Console.WriteLine("(1) Add new block\n(2) View blockchain\n(3) View block\n(4) Quit\n");
                 string execType = Console.ReadLine();
 
-                switch (execType) {
+                switch (execType) 
+                {
                     case "1":
                         AddBlock();
                         break;
@@ -59,23 +68,28 @@ namespace Reppertum {
             }
         }
 
-        private static void AddBlock() {
+        private static void AddBlock() 
+        {
             string execType = string.Empty;
             UInt16 txCount = 0;
             List<Transaction> transactions = new List<Transaction>();
             
-            do {
+            do 
+            {
                 Console.Clear();
                 Console.WriteLine("(1) Add transaction\n(2) Mine block\n");
                 execType = Console.ReadLine();
-                if (execType == "1" || execType == "1") {
+                if (execType == "1" || execType == "1") 
+                {
                     transactions.Add(AddTransaction(txCount));
                 }
-                else {
+                else 
+                {
                     break;
                 }
                 txCount++;
-            } while (execType == "1");
+            } 
+            while (execType == "1");
 
             Block block = _chain.AddBlock(_currHash, transactions, DateTime.UtcNow.Ticks);
 
@@ -84,19 +98,23 @@ namespace Reppertum {
             _currHash = block.Hash;
         }
 
-        private static Transaction AddTransaction(UInt16 index) {
+        private static Transaction AddTransaction(UInt16 index) 
+        {
             Console.Clear();
             Console.Write("Transaction Data: ");
             string data = Console.ReadLine();
             return _chain.AddTransaction(index, "Network", "Network", data);
         }
         
-        private static void ViewChain() {
+        private static void ViewChain() 
+        {
             Console.Clear();
             
-            foreach (Block currBlock in _chain.Chain) {
+            foreach (Block currBlock in _chain.Chain) 
+            {
                 Console.WriteLine($"\nBlock {currBlock.Index}\n---------------\nHash: {currBlock.Hash}\nPrevious Hash: {currBlock.PreviousHash}\nTimestamp: {currBlock.Timestamp}");
-                foreach (Transaction t in currBlock.Data) {
+                foreach (Transaction t in currBlock.Data) 
+                {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {currBlock.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
                 }
             }
@@ -109,14 +127,17 @@ namespace Reppertum {
             UInt16 index = UInt16.Parse(Console.ReadLine());
             Int32 chainSize = _chain.GetNumberOfBlocks() - 1;
             Int32 txIndex = 0;
-            if (index <= chainSize) {
+            if (index <= chainSize) 
+            {
                 Block block = _chain.GetBlock(index);
                 Console.WriteLine($"\nBlock {block.Index}\n---------------\nHash: {block.Hash}\nPrevious Hash: {block.PreviousHash}\nTimestamp: {block.Timestamp}");
-                foreach (Transaction t in block.Data) {
+                foreach (Transaction t in block.Data) 
+                {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {block.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
                 }
             }
-            else {
+            else 
+            {
                 Console.WriteLine($"Block { index } does not exist\n");
             }
         }
