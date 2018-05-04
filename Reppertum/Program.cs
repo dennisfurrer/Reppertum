@@ -10,6 +10,8 @@ namespace Reppertum
 
         private static void Main(string[] args) 
         {
+            //todo Create and start node 
+            
             Console.WriteLine("Welcome! To quit -> Control + c \n");
             Setup();
             Console.ReadKey();
