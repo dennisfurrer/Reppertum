@@ -14,5 +14,10 @@ namespace Reppertum
             Header = header;
             Data = data;
         }
+        
+        public static string GetHash(UInt16 index, string prevHash, Int64 timestamp) 
+        {
+            return Cryptography.Sha256(index + prevHash + timestamp);
+        }
     }
 }

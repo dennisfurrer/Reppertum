@@ -14,7 +14,7 @@ namespace Reppertum
 
         public Blockchain(string prevHash, List<Transaction> data, Int64 timestamp) 
         {
-            string hash = GetHash(_current, prevHash, data, timestamp);
+            string hash = Block.GetHash(_current, prevHash, timestamp);
             FirstHash = hash;
             Block b = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
             Chain.Add(b);
@@ -24,10 +24,10 @@ namespace Reppertum
         public Block AddBlock(string prevHash, List<Transaction> data, Int64 timestamp) 
         {
             Block prevB = Chain[_current-1];
-            string hash = GetHash(_current, prevHash, data, timestamp);
+            string hash = Block.GetHash(_current, prevHash, timestamp);
             Block newB = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
 
-            if (ProofOfWork((Block)prevB, newB)) 
+            if (Consensus.ProofOfWork((Block)prevB, newB)) 
             {
                 Chain.Add(newB);
                 _current++;
@@ -55,42 +55,11 @@ namespace Reppertum
             return Chain[index];
         }
 
-        public string GetHash(UInt16 i, string prevHash, List<Transaction> data, Int64 timestamp) 
-        {
-            return Cryptography.Sha256(i.ToString() + prevHash + data + timestamp);
-        }
-
         public Int32 GetNumberOfBlocks() 
         {
             return Chain.Count;
         }
 
-        private bool ProofOfWork(Block prevB, Block newB, UInt16 difficulty = 5)
-        {
-            Console.Clear();
-            Console.WriteLine("Computing Proof-of-Work...");
-            bool valid = false;
-            UInt32 nonce = 0;
-            string header = newB.Header.Index + newB.Header.PreviousHash;
-            string hash;
-            string diff = string.Empty;
-            for (int i = 0; i < difficulty-1; i++)
-            {
-                diff += "0";
-            }
-            
-            do 
-            {
-                hash = Cryptography.Sha256(header + nonce);
-                nonce++;
-            } 
-            while (hash.Substring(0, difficulty - 1) != diff);
-            
-            valid = (hash.Substring(0, difficulty-1) == diff);
-            
-            Console.WriteLine("Successfully computed!");
-            
-            return valid;
-        }
+        
     }
 }
