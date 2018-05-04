@@ -16,7 +16,7 @@ namespace Reppertum
         {
             string hash = GetHash(_current, prevHash, data, timestamp);
             FirstHash = hash;
-            Block b = new Block(_current, prevHash, hash, data, timestamp);
+            Block b = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
             Chain.Add(b);
             _current++;
         }
@@ -25,14 +25,14 @@ namespace Reppertum
         {
             Block prevB = Chain[_current-1];
             string hash = GetHash(_current, prevHash, data, timestamp);
-            Block newB = new Block(_current, prevHash, hash, data, timestamp);
+            Block newB = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
 
             if (ProofOfWork((Block)prevB, newB)) 
             {
                 Chain.Add(newB);
                 _current++;
             }
-            else if (prevB.PreviousHash != prevHash && prevB.Index != 0) 
+            else if (prevB.Header.PreviousHash != prevHash && prevB.Header.Index != 0) 
             {
                 throw new Exception("Hashes do not match");
             }
@@ -71,7 +71,7 @@ namespace Reppertum
             Console.WriteLine("Computing Proof-of-Work...");
             bool valid = false;
             UInt32 nonce = 0;
-            string header = newB.Index + newB.PreviousHash;
+            string header = newB.Header.Index + newB.Header.PreviousHash;
             string hash;
             
             do 

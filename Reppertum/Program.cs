@@ -93,9 +93,9 @@ namespace Reppertum
 
             Block block = _chain.AddBlock(_currHash, transactions, DateTime.UtcNow.Ticks);
 
-            Console.WriteLine($"Added Block {block.Index} with Hash: {block.Hash})\n");
+            Console.WriteLine($"Added Block {block.Header.Index} with Hash: {block.Header.Hash})\n");
 
-            _currHash = block.Hash;
+            _currHash = block.Header.Hash;
         }
 
         private static Transaction AddTransaction(UInt16 index) 
@@ -112,7 +112,7 @@ namespace Reppertum
             
             foreach (Block currBlock in _chain.Chain) 
             {
-                Console.WriteLine($"\nBlock {currBlock.Index}\n---------------\nHash: {currBlock.Hash}\nPrevious Hash: {currBlock.PreviousHash}\nTimestamp: {currBlock.Timestamp}");
+                Console.WriteLine($"\nBlock {currBlock.Header.Index}\n---------------\nHash: {currBlock.Header.Hash}\nPrevious Hash: {currBlock.Header.PreviousHash}\nTimestamp: {currBlock.Header.Timestamp}");
                 foreach (Transaction t in currBlock.Data) 
                 {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {currBlock.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
@@ -130,7 +130,7 @@ namespace Reppertum
             if (index <= chainSize) 
             {
                 Block block = _chain.GetBlock(index);
-                Console.WriteLine($"\nBlock {block.Index}\n---------------\nHash: {block.Hash}\nPrevious Hash: {block.PreviousHash}\nTimestamp: {block.Timestamp}");
+                Console.WriteLine($"\nBlock {block.Header.Index}\n---------------\nHash: {block.Header.Hash}\nPrevious Hash: {block.Header.PreviousHash}\nTimestamp: {block.Header.Timestamp}");
                 foreach (Transaction t in block.Data) 
                 {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {block.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");

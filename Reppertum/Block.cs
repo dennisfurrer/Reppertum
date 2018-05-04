@@ -5,19 +5,14 @@ namespace Reppertum
 {
     public class Block 
     {
-        public readonly UInt16 Index;
-        public readonly string PreviousHash, Hash;
+        public readonly BlockHeader Header;
         public readonly List<Transaction> Data;
-        public readonly Int64 Timestamp;
 
-        public Block(UInt16 index, string prevHash, string hash, List<Transaction> data, Int64 timestamp)
+        public Block(BlockHeader header, List<Transaction> data)
         {
             if (data == null) data = new List<Transaction>();
-            Index = index;
-            PreviousHash = prevHash;
-            Hash = hash;
+            Header = header;
             Data = data;
-            Timestamp = timestamp;
         }
     }
 }
