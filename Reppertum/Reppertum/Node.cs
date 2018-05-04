@@ -1,7 +1,6 @@
-﻿using Microsoft.AspNetCore.Hosting;
-using Reppertum.RPC;
+﻿using Reppertum.RPC;
 
-namespace Reppertum.Repertum
+namespace Reppertum.Reppertum
 {
     public class Node
     {
