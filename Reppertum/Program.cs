@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Reppertum.Core;
-using Reppertum.Crypto;
 
 namespace Reppertum 
 {
-    class Program 
+    internal static class Program 
     {
         private static Blockchain _chain;
         private static string _currHash = string.Empty;
@@ -62,8 +61,7 @@ namespace Reppertum
                         ViewBlock();
                         break;
                     case "4":
-                        Console.WriteLine("Exiting");
-                        ok = false;
+                        Environment.Exit(1);
                         break;
                     default:
                         Console.WriteLine("Unknown command\n");

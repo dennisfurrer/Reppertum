@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Reppertum.Core;
 
 namespace Reppertum.Crypto
