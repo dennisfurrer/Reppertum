@@ -2,9 +2,9 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Reppertum 
+namespace Reppertum.Crypto 
 {
-    public class Cryptography 
+    public static class Cryptography 
     {
         public static string Sha256(string str) 
         {

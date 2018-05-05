@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Reppertum.Core;
+using Reppertum.Crypto;
 
 namespace Reppertum 
 {
@@ -12,7 +14,7 @@ namespace Reppertum
         {
             //todo Create and start node 
             
-            Console.WriteLine("Welcome! To quit -> Control + c \n");
+            Console.WriteLine();
             Setup();
             Console.ReadKey();
         }
@@ -37,7 +39,7 @@ namespace Reppertum
             Console.Clear();
 
             List<Transaction> genTx = new List<Transaction>{new Transaction(0, "0", "Network", "Network", "Genesis Block", DateTime.UtcNow.Ticks)};
-            _chain = new Blockchain("0", genTx, DateTime.UtcNow.Ticks);
+            _chain = new Blockchain();
             _currHash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
 
@@ -114,7 +116,7 @@ namespace Reppertum
             
             foreach (Block currBlock in _chain.Chain) 
             {
-                Console.WriteLine($"\nBlock {currBlock.Header.Index}\n---------------\nHash: {currBlock.Header.Hash}\nPrevious Hash: {currBlock.Header.PreviousHash}\nTimestamp: {currBlock.Header.Timestamp}");
+                Console.WriteLine($"\nBlock {currBlock.Header.Index}\n---------------\nHash: {currBlock.Header.Hash}\nPrevious Hash: {currBlock.Header.PreviousHash}\nMerkle Root: {currBlock.MerkleRoot}\nTimestamp: {currBlock.Header.Timestamp}");
                 foreach (Transaction t in currBlock.Data) 
                 {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {currBlock.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
@@ -132,7 +134,7 @@ namespace Reppertum
             if (index <= chainSize) 
             {
                 Block block = _chain.GetBlock(index);
-                Console.WriteLine($"\nBlock {block.Header.Index}\n---------------\nHash: {block.Header.Hash}\nPrevious Hash: {block.Header.PreviousHash}\nTimestamp: {block.Header.Timestamp}");
+                Console.WriteLine($"\nBlock {block.Header.Index}\n---------------\nHash: {block.Header.Hash}\nPrevious Hash: {block.Header.PreviousHash}\nMerkle Root: {block.MerkleRoot}\nTimestamp: {block.Header.Timestamp}");
                 foreach (Transaction t in block.Data) 
                 {
                     Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {block.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");

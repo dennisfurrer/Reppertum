@@ -1,4 +1,5 @@
 ﻿using Reppertum.RPC;
+using Reppertum.Core;
 
 namespace Reppertum.Reppertum
 {

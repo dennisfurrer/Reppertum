@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace Reppertum.RPC
 {
-    public class RPCServer
+    public abstract class RPCServer
     {
         public void Start() 
         {
