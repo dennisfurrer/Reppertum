@@ -9,12 +9,10 @@ namespace Reppertum.Crypto
         public static string GetMerkleRoot(List<Transaction> txs)
         {
             List<string> layer = GetTxHashList(txs);
-            
             do
             {
                 layer = GetNextLayer(layer);
             } while (layer.Count != 1);
-            
             return layer[0];
         }
 
@@ -22,7 +20,7 @@ namespace Reppertum.Crypto
         {
             List<string> nextLayer = new List<string>();
             
-            // if there are an odd number of elelemtns, duplicate the last one
+            // if there are an odd number of elements, duplicate the last one
             if (layer.Count % 2 != 0)
             {
                 layer.Add(layer[layer.Count-1]);
@@ -32,7 +30,6 @@ namespace Reppertum.Crypto
             {
                 nextLayer.Add(Cryptography.Sha256(layer[i] + layer[i+1]));
             }
-
             return nextLayer;
         }
         
@@ -43,7 +40,6 @@ namespace Reppertum.Crypto
             {
                 txHashes.Add(t.Hash);
             }
-
             return txHashes;
         }
     }
