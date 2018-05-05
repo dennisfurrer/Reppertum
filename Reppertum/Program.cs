@@ -36,8 +36,6 @@ namespace Reppertum
         private static void NewChain() 
         {
             Console.Clear();
-
-            List<Transaction> genTx = new List<Transaction>{new Transaction(0, "0", "Network", "Network", "Genesis Block", DateTime.UtcNow.Ticks)};
             _chain = new Blockchain();
             _currHash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
