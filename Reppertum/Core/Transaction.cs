@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Reppertum 
+namespace Reppertum.Core 
 {
     public class Transaction 
     {

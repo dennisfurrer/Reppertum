@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography;
-using System.Text;
+using Reppertum.Crypto;
 
-namespace Reppertum 
+namespace Reppertum.Core 
 {
     public class Blockchain 
     {
@@ -12,12 +11,12 @@ namespace Reppertum
         
         private UInt16 _current = 0;
 
-        public Blockchain(string prevHash, List<Transaction> data, Int64 timestamp) 
+        public Blockchain() 
         {
-            string hash = Block.GetHash(_current, prevHash, timestamp);
+            string hash = Block.GetHash(0, "", DateTime.UtcNow.Ticks);
             FirstHash = hash;
-            Block b = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
-            Chain.Add(b);
+            Block genesisBlock = new Block(new BlockHeader(0, hash, "0", DateTime.UtcNow.Ticks), null);
+            Chain.Add(genesisBlock);
             _current++;
         }
 
@@ -44,10 +43,11 @@ namespace Reppertum
             return newB;
         }
         
-        public Transaction AddTransaction(UInt16 index, string from, string to, string data) 
+        public Transaction AddTransaction(UInt16 index, string from, string to, string data)
         {
-            string hashable = index + from + to + data;
-            return new Transaction(index, Cryptography.Sha256(hashable), from, to, data, DateTime.UtcNow.Ticks);
+            Int64 timestamp = DateTime.UtcNow.Ticks;
+            string hashable = index + from + to + data + timestamp;
+            return new Transaction(index, Cryptography.Sha256(hashable), from, to, data, timestamp);
         }
 
         public Block GetBlock(UInt16 index) 
@@ -59,7 +59,5 @@ namespace Reppertum
         {
             return Chain.Count;
         }
-
-        
     }
 }

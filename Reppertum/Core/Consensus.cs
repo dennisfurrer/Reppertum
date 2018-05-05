@@ -1,8 +1,9 @@
 ﻿using System;
+using Reppertum.Crypto;
 
-namespace Reppertum
+namespace Reppertum.Core
 {
-    public class Consensus
+    public static class Consensus
     {
         public static bool ProofOfWork(Block prevB, Block newB, UInt16 difficulty = 5)
         {
@@ -23,7 +24,7 @@ namespace Reppertum
                 hash = Cryptography.Sha256(header + nonce);
                 nonce++;
             } 
-            while (hash.Substring(0, difficulty - 1) != diff);
+            while (hash.Substring(0, difficulty-1) != diff);
             
             valid = (hash.Substring(0, difficulty-1) == diff);
             
