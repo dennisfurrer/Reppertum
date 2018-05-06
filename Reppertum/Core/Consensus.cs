@@ -11,7 +11,7 @@ namespace Reppertum.Core
             Console.WriteLine("Computing Proof-of-Work...");
             bool valid = false;
             UInt32 nonce = 0;
-            string header = newB.header.Index + newB.header.PreviousHash;
+            string header = newB.header.index + newB.header.previousHash;
             string hash;
             string diff = string.Empty;
             for (int i = 0; i < difficulty-1; i++)

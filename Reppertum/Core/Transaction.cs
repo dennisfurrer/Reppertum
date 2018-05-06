@@ -4,18 +4,21 @@ namespace Reppertum.Core
 {
     public class Transaction 
     {
-        public readonly UInt16 Index;
-        public readonly string Hash, FromAddress, ToAddress, Data;
-        public readonly Int64 Timestamp;
+        public UInt16 index { get; set; }
+        public string hash { get; set; }
+        public string fromAddress { get; set; }
+        public string toAddress { get; set; }
+        public string data { get; set; }
+        public Int64 timestamp { get; set; }
 
-        public Transaction(UInt16 index, string hash, string fromAddress, string toAddress, string data, Int64 timestamp) 
+        public Transaction(UInt16 _index, string _hash, string _fromAddress, string _toAddress, string _data, Int64 _timestamp) 
         {
-            Index = index;
-            Hash = hash;
-            FromAddress = fromAddress;
-            ToAddress = toAddress;
-            Data = data;
-            Timestamp = timestamp;
+            index = _index;
+            hash = _hash;
+            fromAddress = _fromAddress;
+            toAddress = _toAddress;
+            data = _data;
+            timestamp = _timestamp;
         }
     }
 }

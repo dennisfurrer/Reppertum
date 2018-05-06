@@ -4,7 +4,7 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    public class Blockchain
+    public class Blockchain : IBlockchain
     {
         public readonly List<Block> Chain = new List<Block>();
 
@@ -28,7 +28,7 @@ namespace Reppertum.Core
                 Chain.Add(newB);
                 _current++;
             }
-            else if (prevB.header.PreviousHash != prevHash && prevB.header.Index != 0)
+            else if (prevB.header.previousHash != prevHash && prevB.header.index != 0)
             {
                 throw new Exception("Hashes do not match");
             }
