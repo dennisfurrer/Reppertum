@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Reppertum.Crypto;
 
-namespace Reppertum.Core 
+namespace Reppertum.Core
 {
     public class Block : IBlock
     {

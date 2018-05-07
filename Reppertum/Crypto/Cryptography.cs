@@ -2,11 +2,11 @@
 using System.Security.Cryptography;
 using System.Text;
 
-namespace Reppertum.Crypto 
+namespace Reppertum.Crypto
 {
-    public static class Cryptography 
+    public static class Cryptography
     {
-        public static string Sha256(string str) 
+        public static string Sha256(string str)
         {
             SHA256Managed crypt = new SHA256Managed();
             StringBuilder hash = new StringBuilder();
