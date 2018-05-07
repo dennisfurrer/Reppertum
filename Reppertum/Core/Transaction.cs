@@ -11,14 +11,14 @@ namespace Reppertum.Core
         public string Data { get; set; }
         public Int64 Timestamp { get; set; }
 
-        public Transaction(UInt16 _index, string _hash, string _fromAddress, string _toAddress, string _data, Int64 _timestamp)
+        public Transaction(UInt16 index, string hash, string fromAddress, string toAddress, string data, Int64 timestamp)
         {
-            Index = _index;
-            Hash = _hash;
-            FromAddress = _fromAddress;
-            ToAddress = _toAddress;
-            Data = _data;
-            Timestamp = _timestamp;
+            Index = index;
+            Hash = hash;
+            FromAddress = fromAddress;
+            ToAddress = toAddress;
+            Data = data;
+            Timestamp = timestamp;
         }
     }
 }

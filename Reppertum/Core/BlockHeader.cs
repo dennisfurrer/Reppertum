@@ -9,12 +9,12 @@ namespace Reppertum.Core
         public string Hash { get; set; }
         public Int64 Timestamp { get; set; }
 
-        public BlockHeader(UInt16 _index, string _hash, string _previousHash, Int64 _timestamp)
+        public BlockHeader(UInt16 index, string hash, string previousHash, Int64 timestamp)
         {
-            Index = _index;
-            Hash = _hash;
-            PreviousHash = _previousHash;
-            Timestamp = _timestamp;
+            Index = index;
+            Hash = hash;
+            PreviousHash = previousHash;
+            Timestamp = timestamp;
         }
     }
 }
