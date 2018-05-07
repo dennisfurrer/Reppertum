@@ -2,17 +2,18 @@
 
 namespace Reppertum.Core
 {
-    public class BlockHeader
+    public class BlockHeader : IBlockHeader
     {
-        public readonly UInt16 Index;
-        public readonly string PreviousHash, Hash;
-        public readonly Int64 Timestamp;
+        public UInt16 Index { get; set; }
+        public string PreviousHash { get; set; }
+        public string Hash { get; set; }
+        public Int64 Timestamp { get; set; }
 
-        public BlockHeader(UInt16 index, string hash, string prevHash, Int64 timestamp)
+        public BlockHeader(UInt16 index, string hash, string previousHash, Int64 timestamp)
         {
             Index = index;
             Hash = hash;
-            PreviousHash = prevHash;
+            PreviousHash = previousHash;
             Timestamp = timestamp;
         }
     }

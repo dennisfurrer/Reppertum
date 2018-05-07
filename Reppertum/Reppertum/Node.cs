@@ -10,12 +10,12 @@ namespace Reppertum.Reppertum
 
         public Node()
         {
-                
+
         }
 
         public void Startup()
         {
-            
+
         }
     }
 }

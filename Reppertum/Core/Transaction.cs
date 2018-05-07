@@ -1,14 +1,17 @@
 ﻿using System;
 
-namespace Reppertum.Core 
+namespace Reppertum.Core
 {
-    public class Transaction 
+    public class Transaction : ITransaction
     {
-        public readonly UInt16 Index;
-        public readonly string Hash, FromAddress, ToAddress, Data;
-        public readonly Int64 Timestamp;
+        public UInt16 Index { get; set; }
+        public string Hash { get; set; }
+        public string FromAddress { get; set; }
+        public string ToAddress { get; set; }
+        public string Data { get; set; }
+        public Int64 Timestamp { get; set; }
 
-        public Transaction(UInt16 index, string hash, string fromAddress, string toAddress, string data, Int64 timestamp) 
+        public Transaction(UInt16 index, string hash, string fromAddress, string toAddress, string data, Int64 timestamp)
         {
             Index = index;
             Hash = hash;

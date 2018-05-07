@@ -10,7 +10,7 @@ namespace Reppertum.RPC
 {
     public abstract class RPCServer
     {
-        public void Start() 
+        public void Start()
         {
             try
             {
@@ -18,7 +18,7 @@ namespace Reppertum.RPC
                     .UseKestrel()
                     .Configure(a => a.Run(ProcessAsync))
                     .Build();
-                
+
                 host.Run();
             }
             catch (Exception e)
@@ -26,18 +26,18 @@ namespace Reppertum.RPC
                 Console.WriteLine(e);
             }
         }
-        
-        private  async Task ProcessAsync(HttpContext context)
+
+        private async Task ProcessAsync(HttpContext context)
         {
             string bodyAsString;
-            
+
             using (var streamReader = new StreamReader(context.Request.Body, Encoding.UTF8))
             {
                 bodyAsString = streamReader.ReadToEnd();
             }
-            
+
             Console.WriteLine("Request data: " + bodyAsString);
-            
+
             await context.Response.WriteAsync("hello");
         }
     }

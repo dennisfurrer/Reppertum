@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using Reppertum.Crypto;
 
-namespace Reppertum.Core 
+namespace Reppertum.Core
 {
-    public class Block 
+    public class Block : IBlock
     {
-        public readonly BlockHeader Header;
-        public readonly List<Transaction> Data;
-        public readonly string MerkleRoot;
-
+        public BlockHeader Header { get; set; }
+        public List<Transaction> Data { get; set; }
+        public string MerkleRoot { get; set; }
         public Block(BlockHeader header, List<Transaction> data)
         {
             if (data == null) data = new List<Transaction>();
@@ -17,10 +16,10 @@ namespace Reppertum.Core
             Data = data;
             MerkleRoot = (data.Count != 0) ? Merkle.GetMerkleRoot(Data) : "Not available due to transaction count.";
         }
-        
-        public static string GetHash(UInt16 index, string prevHash, Int64 timestamp) 
+
+        public string GetHash()
         {
-            return Cryptography.Sha256(index + prevHash + timestamp);
+            return Header.Hash;
         }
     }
 }

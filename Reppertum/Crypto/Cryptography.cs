@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Reppertum.Crypto 
 {
-    public static class Cryptography 
+    public static class Cryptography
     {
         public static string Sha256(string str) 
         {
