@@ -4,7 +4,7 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    class Hash
+    public class Hash
     {
         public static string GetHash(UInt16 index, string prevHash, Int64 timestamp)
         {
