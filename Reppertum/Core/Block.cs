@@ -16,5 +16,10 @@ namespace Reppertum.Core
             data = _data;
             merkleRoot = (_data.Count != 0) ? Merkle.GetMerkleRoot(data) : "Not available due to transaction count.";
         }
+
+        public string GetHash()
+        {
+            return header.hash;
+        }
     }
 }

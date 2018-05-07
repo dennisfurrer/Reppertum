@@ -126,7 +126,7 @@ namespace Reppertum
             Console.WriteLine("Enter Block index: ");
             UInt16 index = UInt16.Parse(Console.ReadLine());
             Int32 chainSize = _chain.GetNumberOfBlocks() - 1;
-            Int32 txindex = 0;
+            // Int32 txindex = 0;
             if (index <= chainSize) 
             {
                 Block block = _chain.GetBlock(index);

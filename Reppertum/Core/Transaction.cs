@@ -2,7 +2,7 @@
 
 namespace Reppertum.Core 
 {
-    public class Transaction 
+    public class Transaction : ITransaction
     {
         public UInt16 index { get; set; }
         public string hash { get; set; }

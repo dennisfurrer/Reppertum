@@ -9,5 +9,6 @@ namespace Reppertum.Core
         BlockHeader header { get; set; }
         List<Transaction> data { get; set; }
         string merkleRoot { get; set; }
+        string GetHash();
     }
 }
