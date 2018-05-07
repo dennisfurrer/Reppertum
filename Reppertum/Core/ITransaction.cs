@@ -2,11 +2,11 @@
 {
     public interface ITransaction
     {
-        string data { get; set; }
-        string fromAddress { get; set; }
-        string hash { get; set; }
-        ushort index { get; set; }
-        long timestamp { get; set; }
-        string toAddress { get; set; }
+        string Data { get; set; }
+        string FromAddress { get; set; }
+        string Hash { get; set; }
+        ushort Index { get; set; }
+        long Timestamp { get; set; }
+        string ToAddress { get; set; }
     }
 }

@@ -7,7 +7,7 @@ namespace Reppertum
     internal static class Program
     {
         private static Blockchain _chain;
-        private static string _currhash = string.Empty;
+        private static string _currHash = string.Empty;
 
         private static void Main(string[] args)
         {
@@ -37,7 +37,7 @@ namespace Reppertum
         {
             Console.Clear();
             _chain = new Blockchain();
-            _currhash = _chain.FirstHash;
+            _currHash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
 
             bool ok = true;
@@ -91,19 +91,19 @@ namespace Reppertum
             }
             while (execType == "1");
 
-            Block block = _chain.AddBlock(_currhash, transactions, DateTime.UtcNow.Ticks);
+            Block block = _chain.AddBlock(_currHash, transactions, DateTime.UtcNow.Ticks);
 
-            Console.WriteLine($"Added Block {block.header.index} with hash: {block.header.hash})\n");
+            Console.WriteLine($"Added Block {block.Header.Index} with Hash: {block.Header.Hash})\n");
 
-            _currhash = block.header.hash;
+            _currHash = block.Header.Hash;
         }
 
-        private static Transaction AddTransaction(UInt16 index)
+        private static Transaction AddTransaction(UInt16 Index)
         {
             Console.Clear();
-            Console.Write("Transaction data: ");
-            string data = Console.ReadLine();
-            return _chain.AddTransaction(index, "Network", "Network", data);
+            Console.Write("Transaction Data: ");
+            string Data = Console.ReadLine();
+            return _chain.AddTransaction(Index, "Network", "Network", Data);
         }
 
         private static void ViewChain()
@@ -112,10 +112,10 @@ namespace Reppertum
 
             foreach (Block currBlock in _chain.Chain)
             {
-                Console.WriteLine($"\nBlock {currBlock.header.index}\n---------------\nhash: {currBlock.header.hash}\nPrevious hash: {currBlock.header.previousHash}\nMerkle Root: {currBlock.merkleRoot}\ntimestamp: {currBlock.header.timestamp}");
-                foreach (Transaction t in currBlock.data)
+                Console.WriteLine($"\nBlock {currBlock.Header.Index}\n---------------\nHash: {currBlock.Header.Hash}\nPrevious Hash: {currBlock.Header.PreviousHash}\nMerkle Root: {currBlock.MerkleRoot}\nTimestamp: {currBlock.Header.Timestamp}");
+                foreach (Transaction t in currBlock.Data)
                 {
-                    Console.WriteLine($"Transaction #{t.index}: \n\thash: {t.hash}\n\tFrom: {t.fromAddress}\n\tTo: {t.toAddress}\n\tdata: {currBlock.data[t.index].data}\n\ttimestamp: {t.timestamp}\n");
+                    Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {currBlock.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
                 }
             }
         }
@@ -123,22 +123,22 @@ namespace Reppertum
         private static void ViewBlock()
         {
             Console.Clear();
-            Console.WriteLine("Enter Block index: ");
-            UInt16 index = UInt16.Parse(Console.ReadLine());
+            Console.WriteLine("Enter Block Index: ");
+            UInt16 Index = UInt16.Parse(Console.ReadLine());
             Int32 chainSize = _chain.GetNumberOfBlocks() - 1;
-            // Int32 txindex = 0;
-            if (index <= chainSize)
+            // Int32 txIndex = 0;
+            if (Index <= chainSize)
             {
-                Block block = _chain.GetBlock(index);
-                Console.WriteLine($"\nBlock {block.header.index}\n---------------\nhash: {block.header.hash}\nPrevious hash: {block.header.previousHash}\nMerkle Root: {block.merkleRoot}\ntimestamp: {block.header.timestamp}");
-                foreach (Transaction t in block.data)
+                Block block = _chain.GetBlock(Index);
+                Console.WriteLine($"\nBlock {block.Header.Index}\n---------------\nHash: {block.Header.Hash}\nPrevious Hash: {block.Header.PreviousHash}\nMerkle Root: {block.MerkleRoot}\nTimestamp: {block.Header.Timestamp}");
+                foreach (Transaction t in block.Data)
                 {
-                    Console.WriteLine($"Transaction #{t.index}: \n\thash: {t.hash}\n\tFrom: {t.fromAddress}\n\tTo: {t.toAddress}\n\tdata: {block.data[t.index].data}\n\ttimestamp: {t.timestamp}\n");
+                    Console.WriteLine($"Transaction #{t.Index}: \n\tHash: {t.Hash}\n\tFrom: {t.FromAddress}\n\tTo: {t.ToAddress}\n\tData: {block.Data[t.Index].Data}\n\tTimestamp: {t.Timestamp}\n");
                 }
             }
             else
             {
-                Console.WriteLine($"Block { index } does not exist\n");
+                Console.WriteLine($"Block { Index } does not exist\n");
             }
         }
     }

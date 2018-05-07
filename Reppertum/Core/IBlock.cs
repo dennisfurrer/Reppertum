@@ -6,9 +6,9 @@ namespace Reppertum.Core
 {
     public interface IBlock
     {
-        BlockHeader header { get; set; }
-        List<Transaction> data { get; set; }
-        string merkleRoot { get; set; }
+        BlockHeader Header { get; set; }
+        List<Transaction> Data { get; set; }
+        string MerkleRoot { get; set; }
         string GetHash();
     }
 }

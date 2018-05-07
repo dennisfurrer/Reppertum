@@ -11,7 +11,7 @@ namespace Reppertum.Core
             Console.WriteLine("Computing Proof-of-Work...");
             bool valid = false;
             UInt32 nonce = 0;
-            string header = newB.header.index + newB.header.previousHash;
+            string Header = newB.Header.Index + newB.Header.PreviousHash;
             string hash;
             string diff = string.Empty;
             for (int i = 0; i < difficulty - 1; i++)
@@ -21,7 +21,7 @@ namespace Reppertum.Core
 
             do
             {
-                hash = Cryptography.Sha256(header + nonce);
+                hash = Cryptography.Sha256(Header + nonce);
                 nonce++;
             }
             while (hash.Substring(0, difficulty - 1) != diff);

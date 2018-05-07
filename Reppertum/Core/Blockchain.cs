@@ -29,7 +29,7 @@ namespace Reppertum.Core
                 Chain.Add(newB);
                 _current++;
             }
-            else if (prevB.header.previousHash != prevHash && prevB.header.index != 0)
+            else if (prevB.Header.PreviousHash != prevHash && prevB.Header.Index != 0)
             {
                 throw new Exception("Hashes do not match");
             }

@@ -3,7 +3,7 @@ using Reppertum.Core;
 
 namespace Reppertum.Reppertum
 {
-    public class Node : INode
+    public class Node
     {
         private Blockchain _blockChain;
         private RPCServer _rpcServer;

@@ -36,7 +36,7 @@ namespace Reppertum.Crypto
             List<string> txHashes = new List<string>();
             foreach (Transaction t in txs)
             {
-                txHashes.Add(t.hash);
+                txHashes.Add(t.Hash);
             }
             return txHashes;
         }
