@@ -37,7 +37,7 @@ namespace Reppertum
         {
             Console.Clear();
             _chain = new Blockchain();
-            //_currhash = _chain.Firsthash;
+            _currhash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
 
             bool ok = true;

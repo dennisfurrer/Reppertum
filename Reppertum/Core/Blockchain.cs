@@ -7,12 +7,14 @@ namespace Reppertum.Core
     public class Blockchain
     {
         public readonly List<Block> Chain = new List<Block>();
-
+        public readonly string FirstHash;
         private UInt16 _current = 0;
 
         public Blockchain()
         {
-            Block genesisBlock = new Block(new BlockHeader(0, Cryptography.Sha256(0 + "" + DateTime.UtcNow.Ticks), "0", DateTime.UtcNow.Ticks), null);
+            string hash = Cryptography.Sha256(0 + "" + DateTime.UtcNow.Ticks);
+            FirstHash = hash;
+            Block genesisBlock = new Block(new BlockHeader(0, hash, "0", DateTime.UtcNow.Ticks), null);
             Chain.Add(genesisBlock);
             _current++;
         }
