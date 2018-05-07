@@ -19,10 +19,9 @@ namespace Reppertum.Core
                 diff += "0";
             }
 
-            Cryptography crypto = new Cryptography();
             do
             {
-                hash = crypto.Sha256(header + nonce);
+                hash = Cryptography.Sha256(header + nonce);
                 nonce++;
             }
             while (hash.Substring(0, difficulty - 1) != diff);

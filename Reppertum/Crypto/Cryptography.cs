@@ -4,9 +4,9 @@ using System.Text;
 
 namespace Reppertum.Crypto 
 {
-    public class Cryptography : ICryptography
+    public static class Cryptography
     {
-        public string Sha256(string str) 
+        public static string Sha256(string str) 
         {
             SHA256Managed crypt = new SHA256Managed();
             StringBuilder hash = new StringBuilder();
