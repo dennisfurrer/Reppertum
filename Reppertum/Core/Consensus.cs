@@ -3,9 +3,9 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    public static class Consensus
+    public class Consensus : IConsensus
     {
-        public static bool ProofOfWork(Block prevB, Block newB, UInt16 difficulty = 5)
+        public bool ProofOfWork(Block prevB, Block newB, UInt16 difficulty = 5)
         {
             Console.Clear();
             Console.WriteLine("Computing Proof-of-Work...");

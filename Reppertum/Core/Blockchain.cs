@@ -23,7 +23,8 @@ namespace Reppertum.Core
             Block prevB = Chain[_current - 1];
             string hash = Hash.GetHash(_current, prevHash, timestamp);
             Block newB = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
-            if (Consensus.ProofOfWork(prevB, newB))
+            Consensus consensus = new Consensus();
+            if (consensus.ProofOfWork(prevB, newB))
             {
                 Chain.Add(newB);
                 _current++;
