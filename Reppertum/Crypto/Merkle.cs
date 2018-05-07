@@ -24,10 +24,10 @@ namespace Reppertum.Crypto
             {
                 layer.Add(layer[layer.Count - 1]);
             }
-
+            Cryptography crypto = new Cryptography();
             for (int i = 0; i < layer.Count - 1; i = i + 2)
             {
-                nextLayer.Add(Cryptography.Sha256(layer[i] + layer[i + 1]));
+                nextLayer.Add(crypto.Sha256(layer[i] + layer[i + 1]));
             }
             return nextLayer;
         }

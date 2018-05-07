@@ -4,7 +4,7 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    public class Blockchain : IBlockchain
+    public class Blockchain
     {
         public readonly List<Block> Chain = new List<Block>();
 
@@ -12,8 +12,8 @@ namespace Reppertum.Core
 
         public Blockchain()
         {
-            string hash = Hash.GetHash(0, "", DateTime.UtcNow.Ticks);
-            Block genesisBlock = new Block(new BlockHeader(0, hash, "0", DateTime.UtcNow.Ticks), null);
+            Hash hash = new Hash();
+            Block genesisBlock = new Block(new BlockHeader(0, hash.GetHash(0, "", DateTime.UtcNow.Ticks), "0", DateTime.UtcNow.Ticks), null);
             Chain.Add(genesisBlock);
             _current++;
         }
@@ -21,8 +21,8 @@ namespace Reppertum.Core
         public Block AddBlock(string prevHash, List<Transaction> data, Int64 timestamp)
         {
             Block prevB = Chain[_current - 1];
-            string hash = Hash.GetHash(_current, prevHash, timestamp);
-            Block newB = new Block(new BlockHeader(_current, hash, prevHash, timestamp), data);
+            Hash hash = new Hash();
+            Block newB = new Block(new BlockHeader(_current, hash.GetHash(_current, prevHash, timestamp), prevHash, timestamp), data);
             Consensus consensus = new Consensus();
             if (consensus.ProofOfWork(prevB, newB))
             {
@@ -43,9 +43,10 @@ namespace Reppertum.Core
 
         public Transaction AddTransaction(UInt16 index, string from, string to, string data)
         {
+            Cryptography crypto = new Cryptography();
             Int64 timestamp = DateTime.UtcNow.Ticks;
             string hashable = index + from + to + data + timestamp;
-            return new Transaction(index, Cryptography.Sha256(hashable), from, to, data, timestamp);
+            return new Transaction(index, crypto.Sha256(hashable), from, to, data, timestamp);
         }
 
         public Block GetBlock(UInt16 index)

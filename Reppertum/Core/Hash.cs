@@ -4,11 +4,12 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    public class Hash
+    public class Hash : IHash
     {
-        public static string GetHash(UInt16 index, string prevHash, Int64 timestamp)
+        public string GetHash(UInt16 index, string prevHash, Int64 timestamp)
         {
-            return Cryptography.Sha256(index + prevHash + timestamp);
+            Cryptography cryptography = new Cryptography();
+            return cryptography.Sha256(index + prevHash + timestamp);
         }
     }
 }
