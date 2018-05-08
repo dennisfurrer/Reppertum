@@ -14,9 +14,6 @@ namespace Reppertum
 
         private static void Main(string[] args)
         {
-
-            Console.WriteLine();
-            Console.WriteLine("parameter count = {0}", args.Length);
             Regex regex = new Regex("(?<name>-{1,2}\\S*)(?:[=:]?|\\s+)(?<value>[^-\\s].*?)?(?=\\s+[-\\/]|$)");
             List<KeyValuePair<string, string>> matches = (from match in regex.Matches(string.Join(" ", args)).Cast<Match>()
                                                           select new KeyValuePair<string, string>(match.Groups["name"].Value, match.Groups["value"].Value)).ToList();        

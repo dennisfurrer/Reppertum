@@ -3,7 +3,7 @@ using Reppertum.Crypto;
 
 namespace Reppertum.Core
 {
-    public class Consensus
+    public class Consensus : IConsensus
     {
 
         public bool ConsensusCalculation(Config config, Block prevB, Block newB, UInt16 difficulty = 5)
