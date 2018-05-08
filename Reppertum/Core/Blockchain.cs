@@ -10,42 +10,44 @@ namespace Reppertum.Core
         public readonly string FirstHash;
         private UInt16 _current = 0;
 
-        public Blockchain()
+        public Blockchain(Config config)
         {
-            string hash = Cryptography.Sha256(0 + "" + DateTime.UtcNow.Ticks);
+            string hash = Cryptography.CalculateHash(config, 0 + "" + DateTime.UtcNow.Ticks);
             FirstHash = hash;
-            Block genesisBlock = new Block(new BlockHeader(0, hash, "0", DateTime.UtcNow.Ticks), null);
+            Block genesisBlock = new Block(config, new BlockHeader(0, hash, "0", DateTime.UtcNow.Ticks), null);
             Chain.Add(genesisBlock);
             _current++;
         }
 
-        public Block AddBlock(string prevHash, List<Transaction> data, Int64 timestamp)
+        public Block AddBlock(Config config, string prevHash, List<Transaction> data, Int64 timestamp)
         {
             Block prevB = Chain[_current - 1];
-            Block newB = new Block(new BlockHeader(_current, Cryptography.Sha256(_current + prevHash +timestamp), prevHash, timestamp), data);
+            
             Consensus consensus = new Consensus();
-            if (consensus.ProofOfWork(prevB, newB))
+            Block newB = new Block(config, new BlockHeader(_current, Cryptography.CalculateHash(config, _current + prevHash + timestamp), prevHash, timestamp), data);
             {
-                Chain.Add(newB);
-                _current++;
+                if (consensus.ConsensusCalculation(config, prevB, newB))
+                {
+                    Chain.Add(newB);
+                    _current++;
+                }
+                else if (prevB.Header.PreviousHash != prevHash && prevB.Header.Index != 0)
+                {
+                    throw new Exception("Hashes do not match");
+                }
+                else
+                {
+                    throw new Exception("Chain not valid");
+                }
             }
-            else if (prevB.Header.PreviousHash != prevHash && prevB.Header.Index != 0)
-            {
-                throw new Exception("Hashes do not match");
-            }
-            else
-            {
-                throw new Exception("Chain not valid");
-            }
-
             return newB;
         }
 
-        public Transaction AddTransaction(UInt16 index, string from, string to, string data)
+        public Transaction AddTransaction(Config config, UInt16 index, string from, string to, string data)
         {
             Int64 timestamp = DateTime.UtcNow.Ticks;
             string hashable = index + from + to + data + timestamp;
-            return new Transaction(index, Cryptography.Sha256(hashable), from, to, data, timestamp);
+            return new Transaction(index, Cryptography.CalculateHash(config, hashable), from, to, data, timestamp);
         }
 
         public Block GetBlock(UInt16 index)

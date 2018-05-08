@@ -5,17 +5,17 @@ namespace Reppertum.Crypto
 {
     public static class Merkle
     {
-        public static string GetMerkleRoot(List<Transaction> txs)
+        public static string GetMerkleRoot(Config config, List<Transaction> txs)
         {
             List<string> layer = GetTxHashList(txs);
             do
             {
-                layer = GetNextLayer(layer);
+                layer = GetNextLayer(config, layer);
             } while (layer.Count != 1);
             return layer[0];
         }
 
-        private static List<string> GetNextLayer(List<string> layer)
+        private static List<string> GetNextLayer(Config config, List<string> layer)
         {
             List<string> nextLayer = new List<string>();
 
@@ -26,7 +26,7 @@ namespace Reppertum.Crypto
             }
             for (int i = 0; i < layer.Count - 1; i = i + 2)
             {
-                nextLayer.Add(Cryptography.Sha256(layer[i] + layer[i + 1]));
+                nextLayer.Add(Cryptography.CalculateHash(config, layer[i] + layer[i + 1]));
             }
             return nextLayer;
         }
