@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text.RegularExpressions;
 using Reppertum.Core;
 
 namespace Reppertum
@@ -8,12 +10,34 @@ namespace Reppertum
     {
         private static Blockchain _chain;
         private static string _currHash = string.Empty;
+        static Config config = new Config();
 
         private static void Main(string[] args)
         {
-            //todo Create and start node 
-
-            Console.WriteLine();
+            Regex regex = new Regex("(?<name>-{1,2}\\S*)(?:[=:]?|\\s+)(?<value>[^-\\s].*?)?(?=\\s+[-\\/]|$)");
+            List<KeyValuePair<string, string>> matches = (from match in regex.Matches(string.Join(" ", args)).Cast<Match>()
+                                                          select new KeyValuePair<string, string>(match.Groups["name"].Value, match.Groups["value"].Value)).ToList();        
+            foreach (KeyValuePair<string, string> _match in matches)
+            {
+                switch (_match.Key.Replace("-", string.Empty).ToLower())
+                {
+                    case "c":
+                        string consensusType = _match.Value.ToLower();
+                        config.ConsensusType = consensusType;
+                        break;
+                    case "h":
+                        string hashType = _match.Value.ToLower();
+                        config.HashType = hashType;
+                        break;
+                    case "n":
+                        string networkType = _match.Value.ToLower();
+                        config.NetworkType = networkType;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            Console.WriteLine("Consensus: " + config.ConsensusType + " Hash: " + config.HashType + " Network: " + config.NetworkType);
             Setup();
             Console.ReadKey();
         }
@@ -36,7 +60,7 @@ namespace Reppertum
         private static void NewChain()
         {
             Console.Clear();
-            _chain = new Blockchain();
+            _chain = new Blockchain(config);
             _currHash = _chain.FirstHash;
             Console.WriteLine("Initialised Genesis Block with default values.");
 
@@ -91,7 +115,7 @@ namespace Reppertum
             }
             while (execType == "1");
 
-            Block block = _chain.AddBlock(_currHash, transactions, DateTime.UtcNow.Ticks);
+            Block block = _chain.AddBlock(config, _currHash, transactions, DateTime.UtcNow.Ticks);
 
             Console.WriteLine($"Added Block {block.Header.Index} with Hash: {block.Header.Hash})\n");
 
@@ -103,7 +127,7 @@ namespace Reppertum
             Console.Clear();
             Console.Write("Transaction Data: ");
             string Data = Console.ReadLine();
-            return _chain.AddTransaction(Index, "Network", "Network", Data);
+            return _chain.AddTransaction(config, Index, "Network", "Network", Data);
         }
 
         private static void ViewChain()

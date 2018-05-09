@@ -2,6 +2,6 @@
 {
     public interface IConsensus
     {
-        bool ProofOfWork(Block prevB, Block newB, ushort difficulty = 5);
+        bool ConsensusCalculation(Config config, Block prevB, Block newB, ushort difficulty = 5);
     }
 }

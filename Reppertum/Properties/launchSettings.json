@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "Reppertum": {
+      "commandName": "Project",
+      "commandLineArgs": "--h Sha256 --c PoW  --n UDP"
+    }
+  }
+}

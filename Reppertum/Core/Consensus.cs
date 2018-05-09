@@ -5,7 +5,18 @@ namespace Reppertum.Core
 {
     public class Consensus : IConsensus
     {
-        public bool ProofOfWork(Block prevB, Block newB, UInt16 difficulty = 5)
+
+        public bool ConsensusCalculation(Config config, Block prevB, Block newB, UInt16 difficulty = 5)
+        {
+            switch (config.ConsensusType)
+            {
+                case ("pow"):
+                    return ProofOfWork(config, prevB, newB, difficulty);
+                default:
+                    return ProofOfWork(config, prevB, newB, difficulty);
+            }
+        }
+        private bool ProofOfWork(Config config, Block prevB, Block newB, UInt16 difficulty = 5)
         {
             Console.Clear();
             Console.WriteLine("Computing Proof-of-Work...");
@@ -18,10 +29,9 @@ namespace Reppertum.Core
             {
                 diff += "0";
             }
-
             do
             {
-                hash = Cryptography.Sha256(Header + nonce);
+                hash = Cryptography.CalculateHash(config, Header + nonce);
                 nonce++;
             }
             while (hash.Substring(0, difficulty - 1) != diff);
