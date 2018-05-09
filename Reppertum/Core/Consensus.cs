@@ -6,7 +6,7 @@ namespace Reppertum.Core
     public class Consensus : IConsensus
     {
 
-        public bool ConsensusCalculation(Config config, Block prevB, Block newB, UInt16 difficulty = 5)
+        public bool ConsensusAchieved(Config config, Block prevB, Block newB, UInt16 difficulty = 5)
         {
             switch (config.ConsensusType)
             {

@@ -26,7 +26,7 @@ namespace Reppertum.Core
             Consensus consensus = new Consensus();
             Block newB = new Block(config, new BlockHeader(_current, Cryptography.CalculateHash(config, _current + prevHash + timestamp), prevHash, timestamp), data);
             {
-                if (consensus.ConsensusCalculation(config, prevB, newB))
+                if (consensus.ConsensusAchieved(config, prevB, newB))
                 {
                     Chain.Add(newB);
                     _current++;
