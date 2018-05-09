@@ -37,7 +37,6 @@ namespace Reppertum
                         break;
                 }
             }
-            Console.WriteLine("Consensus: " + config.ConsensusType + " Hash: " + config.HashType + " Network: " + config.NetworkType);
             Setup();
             Console.ReadKey();
         }
