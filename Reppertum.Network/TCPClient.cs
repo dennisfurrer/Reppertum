@@ -17,26 +17,12 @@ namespace Reppertum.Network
 
         private static String response = String.Empty; // The response from the remote device. 
 
-//        public static int Main(String[] args)
+//        public static void Main(String[] args)
 //        {
-//            Console.WriteLine("Do you wish to send more data? (y/n)");
-//            string exec = Console.ReadLine();
-//
-//            if (exec != "y" && exec != "Y")
-//            {
-//                return 0;
-//            }
-//            
-//            do
-//            {
-//                Console.Clear();
-//                Console.WriteLine("Please enter the data you wish to send:");
-//                string data = Console.ReadLine();
-//                StartClient(data);
-//                Thread.Sleep(2500); // Allow packet data to be displayed for 1 second
-//            } while (exec == "y" || exec == "Y");
-//            
-//            return 0;
+//            Console.Clear();
+//            Console.WriteLine("Please enter the data you wish to send: ");
+//            string data = Console.ReadLine();
+//            StartClient(data);
 //        }
         
         private static void StartClient(string data)
@@ -52,7 +38,7 @@ namespace Reppertum.Network
                 Socket client = new Socket(ipAddress.AddressFamily, SocketType.Stream, ProtocolType.Tcp); // Create a TCP/IP socket.
 
                 // Connect to the remote endpoint.  
-                client.BeginConnect(remoteEp, new AsyncCallback(ConnectCallback), client);
+                client.BeginConnect(remoteEp, ConnectCallback, client);
                 connectDone.WaitOne();
 
                 // Send test data to the remote device.  
@@ -68,6 +54,7 @@ namespace Reppertum.Network
                 // Release the socket.  
                 client.Shutdown(SocketShutdown.Both);
                 client.Close();
+
             }
             catch (Exception e)
             {
@@ -82,7 +69,7 @@ namespace Reppertum.Network
                 Socket client = (Socket) ar.AsyncState; // Retrieve the socket from the state object. 
                 client.EndConnect(ar); // Complete the connection.
 
-                Console.WriteLine("Socket connected to {0}", client.RemoteEndPoint.ToString());
+                Console.WriteLine("Socket connected to {0}", client.RemoteEndPoint);
 
                 connectDone.Set(); // Signal that the connection has been made. 
             }
