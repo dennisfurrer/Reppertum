@@ -30,6 +30,7 @@ namespace Reppertum.Network
             // Bind the socket to the local endpoint and listen for incoming connections.  
             try
             {
+                listener.SetSocketOption(SocketOptionLevel.Socket, SocketOptionName.ReuseAddress, 1);
                 listener.Bind(localEndPoint);
                 listener.Listen(100);
 
@@ -84,7 +85,7 @@ namespace Reppertum.Network
                 content = state.Sb.ToString();
                 if (content.IndexOf("<EOF>") > -1)
                 {
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content.Substring(0, content.Length-5)); // All the data has been read from the client. Display it on the console.
+                    Console.WriteLine("Read {0} bytes from {1}. \n Data : {2}", content.Length, handler.RemoteEndPoint, content.Substring(0, content.Length-5)); // All the data has been read from the client. Display it on the console.
                     Send(handler, "Server successfully received: " + content); // Echo the data back to the client.
                 }
                 else
