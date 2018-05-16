@@ -1,6 +1,6 @@
 ﻿namespace Reppertum.Network
 {
-    public class TCPServer
+    public class TCPListener
     {
         
     }
