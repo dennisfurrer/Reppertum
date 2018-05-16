@@ -17,12 +17,13 @@ namespace Reppertum.Network
 
         private static String response = String.Empty; // The response from the remote device. 
 
-//        public static void Main(String[] args)
+//        public static int Main(String[] args)
 //        {
 //            Console.Clear();
 //            Console.WriteLine("Please enter the data you wish to send: ");
 //            string data = Console.ReadLine();
 //            StartClient(data);
+//            return 0;                
 //        }
         
         private static void StartClient(string data)
