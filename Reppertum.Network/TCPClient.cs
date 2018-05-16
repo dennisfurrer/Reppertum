@@ -19,11 +19,27 @@ namespace Reppertum.Network
 
 //        public static int Main(String[] args)
 //        {
-//            StartClient();
+//            Console.WriteLine("Do you wish to send more data? (y/n)");
+//            string exec = Console.ReadLine();
+//
+//            if (exec != "y" && exec != "Y")
+//            {
+//                return 0;
+//            }
+//            
+//            do
+//            {
+//                Console.Clear();
+//                Console.WriteLine("Please enter the data you wish to send:");
+//                string data = Console.ReadLine();
+//                StartClient(data);
+//                Thread.Sleep(2500); // Allow packet data to be displayed for 1 second
+//            } while (exec == "y" || exec == "Y");
+//            
 //            return 0;
 //        }
         
-        private static void StartClient()
+        private static void StartClient(string data)
         {
             // Connect to a remote device.  
             try
@@ -40,14 +56,14 @@ namespace Reppertum.Network
                 connectDone.WaitOne();
 
                 // Send test data to the remote device.  
-                Send(client, "This is a test<EOF>");
+                Send(client, data+"<EOF>");
                 sendDone.WaitOne();
 
                 // Receive the response from the remote device.  
                 Receive(client);
                 receiveDone.WaitOne();
   
-                Console.WriteLine("Response received : {0}", response); // Write the response to the console.
+                Console.WriteLine("Response received : {0}", response.Substring(0, response.Length-5)); // Write the response to the console.
 
                 // Release the socket.  
                 client.Shutdown(SocketShutdown.Both);

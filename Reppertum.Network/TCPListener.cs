@@ -84,8 +84,8 @@ namespace Reppertum.Network
                 content = state.Sb.ToString();
                 if (content.IndexOf("<EOF>") > -1)
                 {
-                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content); // All the data has been read from the client. Display it on the console.
-                    Send(handler, content); // Echo the data back to the client.
+                    Console.WriteLine("Read {0} bytes from socket. \n Data : {1}", content.Length, content.Substring(0, content.Length-5)); // All the data has been read from the client. Display it on the console.
+                    Send(handler, "Server successfully received: " + content); // Echo the data back to the client.
                 }
                 else
                 {
