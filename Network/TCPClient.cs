@@ -1,4 +1,4 @@
-﻿namespace Reppertum.Network
+﻿namespace Network
 {
     public class TCPClient
     {

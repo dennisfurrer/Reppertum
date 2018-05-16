@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Reppertum", "Reppertum\Reppertum.csproj", "{CFD0BCF3-960A-4487-A6FA-7332CD3F82CE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Network", "Network\Network.csproj", "{A0FD9CDB-8CD3-4C2B-8943-55AA73D19451}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{CFD0BCF3-960A-4487-A6FA-7332CD3F82CE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CFD0BCF3-960A-4487-A6FA-7332CD3F82CE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CFD0BCF3-960A-4487-A6FA-7332CD3F82CE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A0FD9CDB-8CD3-4C2B-8943-55AA73D19451}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A0FD9CDB-8CD3-4C2B-8943-55AA73D19451}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A0FD9CDB-8CD3-4C2B-8943-55AA73D19451}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A0FD9CDB-8CD3-4C2B-8943-55AA73D19451}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
