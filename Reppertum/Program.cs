@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Reppertum.Core;
+using Reppertum.Network;
 
 namespace Reppertum
 {
@@ -43,12 +44,16 @@ namespace Reppertum
 
         private static void Setup()
         {
-            Console.Write("(1) New blockchain: ");
+            Console.Write("(1) New blockchain\n(2) Test UPnP\n");
             string execType = Console.ReadLine();
 
             if (execType == "1")
             {
                 NewChain();
+            }
+            else if (execType == "2")
+            {
+                UPnP();
             }
             else
             {
@@ -162,6 +167,20 @@ namespace Reppertum
             else
             {
                 Console.WriteLine($"Block { Index } does not exist\n");
+            }
+        }
+
+        private static void UPnP()
+        {
+            Console.Clear();
+            try
+            {
+                Network.UPnP.Discover();
+                Console.WriteLine("You have an UPnP-enabled router and your IP is: " + Network.UPnP.GetExternalIP());
+            }
+            catch
+            {
+                Console.WriteLine("You do not have an UPnP-enabled router.");
             }
         }
     }

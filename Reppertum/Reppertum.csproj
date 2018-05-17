@@ -7,4 +7,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.1.0-preview2-final" />
     <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.1.0-preview2-final" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Reppertum.Network\Reppertum.Network.csproj" />
+  </ItemGroup>
 </Project>

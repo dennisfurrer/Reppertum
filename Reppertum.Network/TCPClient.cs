@@ -8,22 +8,21 @@ namespace Reppertum.Network
 {
     public class TCPClient
     {
-        private const int port = 11000; // The port number for the remote device.
+        private const Int32 port = 11000; // The port number for the remote device.
 
         // ManualResetEvent instances signal completion.  
-        private static ManualResetEvent connectDone = new ManualResetEvent(false);
-        private static ManualResetEvent sendDone = new ManualResetEvent(false);
-        private static ManualResetEvent receiveDone = new ManualResetEvent(false);
+        private static ManualResetEvent _connectDone = new ManualResetEvent(false);
+        private static ManualResetEvent _sendDone = new ManualResetEvent(false);
+        private static ManualResetEvent _receiveDone = new ManualResetEvent(false);
 
-        private static String response = String.Empty; // The response from the remote device. 
+        private static string response = string.Empty; // The response from the remote device. 
 
-//        public static int Main(String[] args)
+//        public static void Main(String[] args)
 //        {
 //            Console.Clear();
 //            Console.WriteLine("Please enter the data you wish to send: ");
 //            string data = Console.ReadLine();
 //            StartClient(data);
-//            return 0;                
 //        }
         
         private static void StartClient(string data)
@@ -40,15 +39,15 @@ namespace Reppertum.Network
 
                 // Connect to the remote endpoint.  
                 client.BeginConnect(remoteEp, ConnectCallback, client);
-                connectDone.WaitOne();
+                _connectDone.WaitOne();
 
                 // Send test data to the remote device.  
                 Send(client, data+"<EOF>");
-                sendDone.WaitOne();
+                _sendDone.WaitOne();
 
                 // Receive the response from the remote device.  
                 Receive(client);
-                receiveDone.WaitOne();
+                _receiveDone.WaitOne();
   
                 Console.WriteLine("Response received : {0}", response.Substring(0, response.Length-5)); // Write the response to the console.
 
@@ -72,7 +71,7 @@ namespace Reppertum.Network
 
                 Console.WriteLine("Socket connected to {0}", client.RemoteEndPoint);
 
-                connectDone.Set(); // Signal that the connection has been made. 
+                _connectDone.Set(); // Signal that the connection has been made. 
             }
             catch (Exception e)
             {
@@ -103,7 +102,7 @@ namespace Reppertum.Network
                 StateObject state = (StateObject) ar.AsyncState;
                 Socket client = state.WorkSocket;
 
-                int bytesRead = client.EndReceive(ar); // Read data from the remote device.
+                Int32 bytesRead = client.EndReceive(ar); // Read data from the remote device.
 
                 if (bytesRead > 0)
                 {
@@ -118,7 +117,7 @@ namespace Reppertum.Network
                         response = state.Sb.ToString();
                     }
 
-                    receiveDone.Set(); // Signal that all bytes have been received.
+                    _receiveDone.Set(); // Signal that all bytes have been received.
                 }
             }
             catch (Exception e)
@@ -127,7 +126,7 @@ namespace Reppertum.Network
             }
         }
 
-        private static void Send(Socket client, String data)
+        private static void Send(Socket client, string data)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(data); // Convert the string data to byte data using ASCII encoding.
             client.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), client); // Begin sending the data to the remote device.
@@ -138,11 +137,11 @@ namespace Reppertum.Network
             try
             {
                 Socket client = (Socket) ar.AsyncState; // Retrieve the socket from the state object.
-                int bytesSent = client.EndSend(ar); // Complete sending the data to the remote device.
+                Int32 bytesSent = client.EndSend(ar); // Complete sending the data to the remote device.
                 
                 Console.WriteLine("Sent {0} bytes to server.", bytesSent);
 
-                sendDone.Set(); // Signal that all bytes have been sent.
+                _sendDone.Set(); // Signal that all bytes have been sent.
             }
             catch (Exception e)
             {
