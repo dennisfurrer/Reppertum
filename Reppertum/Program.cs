@@ -173,13 +173,16 @@ namespace Reppertum
         private static void UPnP()
         {
             Console.Clear();
+            Console.WriteLine("Checking if you have a UPnP-enabled router...");
             try
             {
+                Console.Clear();
                 Network.UPnP.Discover();
                 Console.WriteLine("You have an UPnP-enabled router and your IP is: " + Network.UPnP.GetExternalIP());
             }
             catch
             {
+                Console.Clear();
                 Console.WriteLine("You do not have an UPnP-enabled router.");
             }
         }
