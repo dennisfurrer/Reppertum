@@ -8,7 +8,7 @@ namespace Reppertum.Network
 {
     public class TCPListener
     {
-        public static ManualResetEvent allDone = new ManualResetEvent(false); // Thread signal. 
+        public static ManualResetEvent AllDone = new ManualResetEvent(false); // Thread signal. 
 
 //        public static int Main(String[] args)
 //        {
@@ -36,13 +36,13 @@ namespace Reppertum.Network
 
                 while (true)
                 {
-                    allDone.Reset(); // Set the event to nonsignaled state.
+                    AllDone.Reset(); // Set the event to nonsignaled state.
 
                     // Start an asynchronous socket to listen for connections.  
                     Console.WriteLine("Waiting for a connection...");
                     listener.BeginAccept(new AsyncCallback(AcceptCallback), listener);
 
-                    allDone.WaitOne(); // Wait until a connection is made before continuing.  
+                    AllDone.WaitOne(); // Wait until a connection is made before continuing.  
                 }
             }
             catch (Exception e)
@@ -56,7 +56,7 @@ namespace Reppertum.Network
 
         public static void AcceptCallback(IAsyncResult ar)
         {
-            allDone.Set(); // Signal the main thread to continue.
+            AllDone.Set(); // Signal the main thread to continue.
 
             // Get the socket that handles the client request.  
             Socket listener = (Socket) ar.AsyncState;
@@ -69,7 +69,7 @@ namespace Reppertum.Network
 
         public static void ReadCallback(IAsyncResult ar)
         {
-            String content = String.Empty;
+            string content = string.Empty;
 
             // Retrieve the state object and the handler socket from the asynchronous state object.
             StateObject state = (StateObject) ar.AsyncState;
@@ -95,7 +95,7 @@ namespace Reppertum.Network
             }
         }
 
-        private static void Send(Socket handler, String data)
+        private static void Send(Socket handler, string data)
         {
             byte[] byteData = Encoding.ASCII.GetBytes(data); // Convert the string data to byte data using ASCII encoding.
             handler.BeginSend(byteData, 0, byteData.Length, 0, new AsyncCallback(SendCallback), handler); // Begin sending the data to the remote device. 
@@ -107,7 +107,7 @@ namespace Reppertum.Network
             {
                 Socket handler = (Socket) ar.AsyncState; // Retrieve the socket from the state object.
 
-                int bytesSent = handler.EndSend(ar); // Complete sending the data to the remote device.
+                Int32 bytesSent = handler.EndSend(ar); // Complete sending the data to the remote device.
                 Console.WriteLine("Sent {0} bytes to client.", bytesSent);
 
                 handler.Shutdown(SocketShutdown.Both);
